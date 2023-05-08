@@ -10,7 +10,7 @@ const menu = [
 
     {
         id:2,
-        title: 'Diner Double',
+        title: 'Dinner Double',
         category: 'Lunch',
         price:13.99,
         image: "./images/item-2.jpeg",
@@ -83,7 +83,7 @@ const menu = [
     {
         id:10,
         title: 'Stack Dinner ',
-        category: 'Diiner',
+        category: 'Dinner',
         price: 39.99,
         image: "./images/item-10.jpeg",
         description: "Skateboard fam synth authentic semiotics. Live-edge lyft af, edison buld yuccie crucifix microdosing"
@@ -93,8 +93,14 @@ const menu = [
 const menuItems = document.querySelector('.menu-items');
 const buttonContainer = document.querySelector('.button-container')
 
+window.addEventListener("DOMContentLoaded" , () => {
+    displayMenuButtons()
+});
+
+
 menu.map((item) => {
     let html = `
+    <div class="menu-item">
         <div class="item-image">
             <img src="${item.image}" alt="${item.title}">
         </div>
@@ -111,8 +117,30 @@ menu.map((item) => {
                 <p>${item.description}</p>
             </div>
         </div>
+        </div>
         `
 
 
     menuItems.innerHTML += html
-})
+});
+
+function displayMenuButtons() {
+    const categories = menu.reduce((value, item) => {
+        if(!value.includes(item.category)) {
+            value.push(item.category)
+        }
+
+        return value;
+    }, ["All"]);
+
+
+
+    const categoryButtons = categories.map((category) => {
+        return `
+        <button class="filter-button" data-id="${category}">${category}</button>
+        `
+    }).join("");
+
+    buttonContainer.innerHTML += categoryButtons;
+}
+

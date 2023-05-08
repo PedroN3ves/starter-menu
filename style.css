@@ -17,11 +17,10 @@ body{
 }
 
 main {
-    display: grid;
-    grid-template-columns: 1000px;
-    grid-template-rows: 360px 220px;
+    display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 main header {
@@ -69,9 +68,18 @@ main header .button-container button:hover{
 }
 
 main section .menu-items{
+    margin-top: 2rem;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     gap: 1.6rem;
     max-width: 64rem;
+}
+
+.menu-item {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
 }
 
 main section .menu-items .item-info{
