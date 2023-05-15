@@ -23,7 +23,7 @@ const menu = [
         category: 'Shakes',
         price: 6.99,
         image: "./images/item-3.jpeg",
-        description: "ombucha chillwave fanny pack 3 wolf moon street art photo booth before they sold out organic viral"
+        description: "Ombucha chillwave fanny pack 3 wolf moon street art photo booth before they sold out organic viral"
     },
 
     {
@@ -94,35 +94,37 @@ const menuItems = document.querySelector('.menu-items');
 const buttonContainer = document.querySelector('.button-container')
 
 window.addEventListener("DOMContentLoaded" , () => {
+    displayMenuItems(menu)
     displayMenuButtons()
 });
 
-
-menu.map((item) => {
-    let html = `
-    <div class="menu-item">
-        <div class="item-image">
-            <img src="${item.image}" alt="${item.title}">
-        </div>
-
-
-        <div class="item-info">
-            <div class="item-title">
-                <p>${item.title}</p>
-                <p class="price">$${item.price}</p>
+function displayMenuItems(menuItem){
+    let showMenu = menuItem.map((item) => {
+        return `
+        <div class="content">
+            <div class="item-image">
+                <img src="${item.image}" alt="${item.title}">
             </div>
-
-
-            <div class="item-description">
-                <p>${item.description}</p>
+    
+    
+            <div class="item-info">
+                <div class="item-title">
+    
+                    <p>${item.title}</p>
+                    <p class="price">$${item.price}</p>
+                </div>
+    
+    
+                <div class="item-description">
+                    <p>${item.description}</p>
+                </div>
             </div>
-        </div>
-        </div>
-        `
-
-
-    menuItems.innerHTML += html
-});
+            </div>
+            `
+        });
+        showMenu = showMenu.join("");
+        menuItems.innerHTML = showMenu;
+}
 
 function displayMenuButtons() {
     const categories = menu.reduce((value, item) => {
@@ -142,5 +144,26 @@ function displayMenuButtons() {
     }).join("");
 
     buttonContainer.innerHTML += categoryButtons;
+
+
+    const filterButtons = document.querySelectorAll(".filter-button");
+    filterButtons.forEach((button) => {
+        button.addEventListener("click", (event) => {
+            const category = event.currentTarget.dataset.id;
+
+            const menuCategory = menu.filter((menuItem) => {
+                if(menuItem.category === category){
+                    return menuItem;
+                }
+            });
+
+            if(category === "All") {
+                displayMenuItems(menu);
+            } else {
+                displayMenuItems(menuCategory)
+            }
+        });
+
+    });
 }
 
